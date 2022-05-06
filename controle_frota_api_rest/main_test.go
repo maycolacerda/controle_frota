@@ -30,6 +30,8 @@ func DeletaveiculoMock() {
 	var veiculo models.Veiculo
 	database.DB.Delete(&veiculo, ID)
 }
+
+//teste da home page
 func TestStatusHome(t *testing.T) {
 
 	r := SetupRotasTeste(gin.Default())
@@ -42,6 +44,7 @@ func TestStatusHome(t *testing.T) {
 	assert.Equal(t, mockResposta, resp.Body.String(), "Mensagem deve ser Olá mundo")
 }
 
+//testa a listagem de veiculos
 func TestVeiculos(t *testing.T) {
 	database.Connect()
 	CriaVeiculoMock()
@@ -51,6 +54,20 @@ func TestVeiculos(t *testing.T) {
 	req, _ := http.NewRequest("GET", "/veiculos", nil)
 	resp := httptest.NewRecorder()
 	r.ServeHTTP(resp, req)
+	//fmt.Println(resp.Body.String())
 	assert.Equal(t, 200, resp.Code, "Status deve ser 200")
+
+}
+func TestVeiculo(t *testing.T) {
+
+	database.Connect()
+	mockResposta := `{"ID":0,"CreatedAt":"2022-05-04T06:41:47Z","UpdatedAt":"2022-05-04T06:41:47Z","DeletedAt":null,"id_veiculo":1,"identificador":"A01","tipo":"Carro","marca":"Ford","modelo":"Fusion","rastreador":true,"placa":"ABC-1234","disponivel":true,"km":true,"tipoCarteira":"B"}`
+
+	r := SetupRotasTeste(gin.Default())
+	r.GET("/veiculo/:id_veiculo", controllers.GetVeiculo)
+	req, _ := http.NewRequest("GET", "/veiculo/1", nil)
+	resp := httptest.NewRecorder()
+	r.ServeHTTP(resp, req)
+	assert.Equal(t, mockResposta, resp.Body.String(), "os valores devem ser iguais")
 
 }
