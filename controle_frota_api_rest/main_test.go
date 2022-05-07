@@ -17,7 +17,7 @@ var (
 )
 
 func SetupRotasTeste(router *gin.Engine) *gin.Engine {
-
+	gin.SetMode(gin.ReleaseMode)
 	rotas := gin.Default()
 	return rotas
 }

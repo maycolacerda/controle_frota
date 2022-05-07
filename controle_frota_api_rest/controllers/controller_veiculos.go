@@ -15,6 +15,7 @@ func Index(c *gin.Context) {
 		"status":   "ok",
 	})
 }
+
 func Veiculos(c *gin.Context) {
 
 	var veiculos []models.Veiculo
@@ -22,6 +23,7 @@ func Veiculos(c *gin.Context) {
 
 	c.JSON(200, veiculos)
 }
+
 func GetVeiculo(c *gin.Context) {
 	id := c.Params.ByName("id_veiculo")
 	var veiculo models.Veiculo
@@ -89,4 +91,11 @@ func AtualizarVeiculo(c *gin.Context) {
 		}
 	}
 
+}
+
+func RenderIndex(c *gin.Context) {
+
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"Message": "Boas vindas",
+	})
 }

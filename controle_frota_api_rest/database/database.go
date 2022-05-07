@@ -21,7 +21,9 @@ func Connect() {
 	}
 	DB, err = gorm.Open(mysql.New(mysql.Config{
 		Conn: db,
-	}), &gorm.Config{})
+	}), &gorm.Config{
+		DisableForeignKeyConstraintWhenMigrating: true,
+	})
 
 	if err != nil {
 		log.Fatal("erro na conexão com o banco de dados: " + err.Error())
