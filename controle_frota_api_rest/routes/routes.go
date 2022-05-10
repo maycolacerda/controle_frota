@@ -20,6 +20,7 @@ func HandleRequests() {
 	r.POST("/novoveiculo", controllers.NovoVeiculo)
 	r.DELETE("/deletarveiculo/:id_veiculo", controllers.DeletarVeiculo)
 	r.PATCH("/atualizarveiculo/:id_veiculo", controllers.AtualizarVeiculo)
+	r.NoRoute(controllers.NotFound)
 	log.Fatal(http.ListenAndServe("localhost:8000", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r))) //libera o consumo da api através de qualquer porta]
 
 }
