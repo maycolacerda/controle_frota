@@ -16,7 +16,7 @@ func Servicos(c *gin.Context) {
 
 }
 
-func GetServicos(c *gin.Context) {
+func GetServico(c *gin.Context) {
 
 	id := c.Params.ByName("id_servico")
 	var servico models.Servico
@@ -39,6 +39,27 @@ func NovoServico(c *gin.Context) {
 			})
 		} else {
 			database.DB.Create(&servico)
+			c.JSON(http.StatusOK, servico)
+		}
+	}
+}
+
+func AtualizarServico(c *gin.Context) {
+
+	var servico models.Servico
+	id := c.Params.ByName("id_servico")
+	database.DB.First(&servico, id)
+	if err := c.ShouldBindJSON(&servico); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Erro": err.Error(),
+		})
+	} else {
+		if err := models.ValidacaoServico(&servico); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"Erro": err.Error(),
+			})
+		} else {
+			database.DB.Save(&servico)
 			c.JSON(http.StatusOK, servico)
 		}
 	}

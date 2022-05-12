@@ -15,12 +15,34 @@ func HandleRequests() {
 
 	r.GET("/", controllers.Index)
 	r.GET("/home", controllers.RenderIndex)
+
+	//veiculos
 	r.GET("/veiculos/:id_veiculo", controllers.GetVeiculo)
 	r.GET("/veiculos", controllers.Veiculos)
 	r.POST("/novoveiculo", controllers.NovoVeiculo)
 	r.DELETE("/deletarveiculo/:id_veiculo", controllers.DeletarVeiculo)
 	r.PATCH("/atualizarveiculo/:id_veiculo", controllers.AtualizarVeiculo)
+
+	//motoristas
+	r.GET("/motoristas/motoristas", controllers.Motoristas)
+	r.GET("/motoristas/:id_motorista", controllers.GetMotorista)
+	r.POST("/novomotorista", controllers.NovoMotorista)
+	r.PATCH("/atualizarmotorista/:id_motorista", controllers.AtualizarMotorista)
+
+	//servicos
+	r.GET("/servicos/", controllers.Servicos)
+	r.GET("/servicos/:id_servico", controllers.GetServico)
+	r.POST("/novoservico", controllers.NovoServico)
+	r.PATCH("/atualizarservico/:id_servico", controllers.AtualizarServico)
+
+	//Manutencoes
+	r.GET("/manutencoes/", controllers.Manutencoes)
+	r.GET("/manutencoes/:id_manutencao", controllers.GetManutencao)
+	r.POST("/novamanutencao", controllers.NovaManutencao)
+	r.PATCH("/atualizarmanutencao/:id_manutencao", controllers.AtualizarManutencao)
+	//404
 	r.NoRoute(controllers.NotFound)
+
 	log.Fatal(http.ListenAndServe("localhost:8000", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r))) //libera o consumo da api através de qualquer porta]
 
 }

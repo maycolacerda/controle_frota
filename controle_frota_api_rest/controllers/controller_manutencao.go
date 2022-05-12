@@ -42,7 +42,7 @@ func NovaManutencao(c *gin.Context) {
 	}
 }
 
-func UpdateManutencao(c *gin.Context) {
+func AtualizarManutencao(c *gin.Context) {
 
 	var manutencao models.Manutencao
 	id := c.Params.ByName("id_manutencao")

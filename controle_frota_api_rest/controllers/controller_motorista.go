@@ -44,7 +44,7 @@ func NovoMotorista(c *gin.Context) {
 	}
 }
 
-func UpdateMotorista(c *gin.Context) {
+func AtualizarMotorista(c *gin.Context) {
 
 	var motorista models.Motorista
 	id := c.Params.ByName("id_motorista")
