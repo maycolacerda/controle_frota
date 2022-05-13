@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS `veiculos`;
 CREATE TABLE `veiculos` (
   `Id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `identificador` varchar(5) NOT NULL,
+  `setor` varchar(50) NOT NULL,
   `tipo` varchar(50) NOT NULL,
   `marca` varchar(50) NOT NULL,
   `modelo` varchar(50) NOT NULL,
@@ -27,10 +28,12 @@ CREATE TABLE `veiculos` (
   UNIQUE KEY `identificador` (`identificador`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `veiculos` (`Id`, `identificador`, `tipo`, `marca`, `modelo`, `rastreador`, `placa`, `disponivel`, `km`, `tipo_carteira`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1,	'A01',	'Carro',	'Ford',	'Fusion',	1,	'ABC-1234',	1,	1,	'B',	'2022-05-04 06:41:47',	'2022-05-04 06:41:47',	NULL),
-(2,	'C01',	'Trator',	'John Deere',	'5090',	1,	'N/A',	1,	1,	'N/A',	'2022-05-04 06:41:47',	'2022-05-04 06:41:47',	NULL),
-(3,	'a03',	'carro',	'Fiat',	'Uno 2012',	0,	'abc-2345',	0,	0,	'B',	'2022-05-04 06:50:53',	'2022-05-04 06:50:53',	NULL),
+INSERT INTO `veiculos` (`Id`, `identificador`, `setor`, `tipo`, `marca`, `modelo`, `rastreador`, `placa`, `disponivel`, `km`, `tipo_carteira`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1,	'A01', 'Transporte', 'Carro',	'Ford',	'Fusion',	1,	'ABC-1234',	1,	1,	'B',	'2022-05-04 06:41:47',	'2022-05-04 06:41:47',	NULL),
+(2,	'C01', 'Agricola',	'Trator',	'John Deere',	'5090',	1,	'N/A',	1,	1,	'N/A',	'2022-05-04 06:41:47',	'2022-05-04 06:41:47',	NULL),
+(3,	'a03', 'Transporte', 'carro',	'Fiat',	'Uno 2012',	0,	'abc-2345',	0,	0,	'B',	'2022-05-04 06:50:53',	'2022-05-04 06:50:53',	NULL),
 (5,	'a04',	'carro',	'Fiat',	'Uno 2013',	0,	'abc-3456',	0,	0,	'B',	'2022-05-04 06:51:44',	'2022-05-04 06:51:44',	NULL);
+
+
 
 -- 2022-05-04 06:53:53

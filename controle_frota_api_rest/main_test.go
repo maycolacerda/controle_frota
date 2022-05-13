@@ -71,3 +71,7 @@ func TestVeiculo(t *testing.T) {
 	assert.Equal(t, mockResposta, resp.Body.String(), "os valores devem ser iguais")
 
 }
+
+func TestManutencao(t *testing.T) {
+
+}

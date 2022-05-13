@@ -34,6 +34,7 @@ func GetVeiculo(c *gin.Context) {
 			"Erro": "Veiculo não encontrado",
 		})
 	} else {
+
 		c.JSON(http.StatusOK, veiculo)
 	}
 }

@@ -9,6 +9,7 @@ type Veiculo struct {
 	gorm.Model
 	Id            uint   `json:"id_veiculo" gorm:"primary_key"`
 	Identificador string `json:"identificador" gorm:"unique" validate:"required" regexp:"^[a-zA-Z0-9]{1,10}$"`
+	Setor         string `json:"setor" validate:"required"`
 	Tipo          string `json:"tipo" validate:"required"`
 	Marca         string `json:"marca" validate:"required"`
 	Modelo        string `json:"modelo" validate:"required"`
