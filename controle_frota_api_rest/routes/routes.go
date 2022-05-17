@@ -24,19 +24,19 @@ func HandleRequests() {
 	r.PATCH("/atualizarveiculo/:id_veiculo", controllers.AtualizarVeiculo)
 
 	//motoristas
-	r.GET("/motoristas/motoristas", controllers.Motoristas)
+	r.GET("/motoristas", controllers.Motoristas)
 	r.GET("/motoristas/:id_motorista", controllers.GetMotorista)
 	r.POST("/novomotorista", controllers.NovoMotorista)
 	r.PATCH("/atualizarmotorista/:id_motorista", controllers.AtualizarMotorista)
 
 	//servicos
-	r.GET("/servicos/", controllers.Servicos)
+	r.GET("/servicos", controllers.Servicos)
 	r.GET("/servicos/:id_servico", controllers.GetServico)
 	r.POST("/novoservico", controllers.NovoServico)
 	r.PATCH("/atualizarservico/:id_servico", controllers.AtualizarServico)
 
 	//Manutencoes
-	r.GET("/manutencoes/", controllers.Manutencoes)
+	r.GET("/manutencoes", controllers.Manutencoes)
 	r.GET("/manutencoes/:id_manutencao", controllers.GetManutencao)
 	r.POST("/novamanutencao", controllers.NovaManutencao)
 	r.PATCH("/atualizarmanutencao/:id_manutencao", controllers.AtualizarManutencao)

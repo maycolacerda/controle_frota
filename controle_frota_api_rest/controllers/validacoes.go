@@ -43,3 +43,15 @@ func ValidaAptidao(idmotorista uint, idveiculo uint) bool {
 	}
 
 }
+
+func ValidaServico(idmotorista uint, idveiculo uint) bool {
+	vm := ValidaMotorista(idmotorista)
+	vv := ValidaVeiculo(idveiculo)
+	va := ValidaAptidao(idmotorista, idveiculo)
+	if vm && vv && va {
+		return true
+	} else {
+		return false
+	}
+
+}

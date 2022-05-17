@@ -29,21 +29,28 @@ func GetServico(c *gin.Context) {
 func NovoServico(c *gin.Context) {
 
 	var servico models.Servico
-	if err := c.ShouldBindJSON(&servico); err != nil {
+	err := c.ShouldBindJSON(&servico)
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Erro": err.Error(),
 		})
-	} else {
-		if err := models.ValidacaoServico(&servico); err != nil { //valida campos do servico
-			c.JSON(http.StatusBadRequest, gin.H{
-				"Erro": err.Error(),
-			})
-		} else {
-			database.DB.Create(&servico)
-			c.JSON(http.StatusOK, servico)
-
-		}
 	}
+	err = models.ValidacaoServico(&servico)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Erro": err.Error(),
+		})
+	}
+	val := ValidaServico(servico.IdMotorista, servico.IdVeiculo)
+	if val {
+		database.DB.Create(&servico)
+		c.JSON(http.StatusOK, servico)
+	} else {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Erro": "Motorista ou Veiculo não existe ou não possui carteira para o veiculo",
+		})
+	}
+
 }
 
 func AtualizarServico(c *gin.Context) {
