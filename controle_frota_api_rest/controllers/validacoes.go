@@ -45,6 +45,8 @@ func ValidaAptidao(idmotorista uint, idveiculo uint) bool {
 }
 
 func ValidaServico(idmotorista uint, idveiculo uint) bool {
+
+	//chnl := make (chan bool)
 	vm := ValidaMotorista(idmotorista)
 	vv := ValidaVeiculo(idveiculo)
 	va := ValidaAptidao(idmotorista, idveiculo)

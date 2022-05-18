@@ -4,6 +4,7 @@ import (
 	"controle_frota_gin/database"
 	"controle_frota_gin/models"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -23,42 +24,75 @@ func GetManutencao(c *gin.Context) {
 	c.JSON(200, manutencao)
 }
 
+//cria uma nova manutençao verificando se veiculo existe
+
 func NovaManutencao(c *gin.Context) {
 
 	var manutencao models.Manutencao
-	if err := c.ShouldBindJSON(&manutencao); err != nil {
+	idveiculo := c.Params.ByName("id_veiculo")
+	err := c.ShouldBindJSON(&manutencao)
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Erro": err.Error(),
 		})
-	} else {
-		if err := models.ValidacaoManutencao(&manutencao); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"Erro": err.Error(),
-			})
-		} else {
-			database.DB.Create(&manutencao)
-			c.JSON(http.StatusOK, manutencao)
-		}
 	}
+	err = models.ValidacaoManutencao(&manutencao)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Erro": err.Error(),
+		})
+	}
+	temp, err := strconv.ParseUint(idveiculo, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Erro": err.Error(),
+		})
+	}
+	if ValidaVeiculo(uint(temp)) {
+		database.DB.Create(&manutencao)
+		c.JSON(http.StatusOK, manutencao)
+	} else {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Erro": "Veiculo não encontrado",
+		})
+	}
+
 }
+
+//Atualiza manutenção verificando se veiculo existe
 
 func AtualizarManutencao(c *gin.Context) {
 
 	var manutencao models.Manutencao
 	id := c.Params.ByName("id_manutencao")
+	idveiculo := c.Params.ByName("id_veiculo")
 	database.DB.First(&manutencao, id)
-	if err := c.ShouldBindJSON(&manutencao); err != nil {
+
+	err := c.ShouldBindJSON(&manutencao)
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Erro": err.Error(),
 		})
-	} else {
-		if err := models.ValidacaoManutencao(&manutencao); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"Erro": err.Error(),
-			})
-		} else {
-			database.DB.Save(&manutencao)
-			c.JSON(http.StatusOK, manutencao)
-		}
 	}
+	err = models.ValidacaoManutencao(&manutencao)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Erro": err.Error(),
+		})
+	}
+	temp, err := strconv.ParseUint(idveiculo, 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Erro": err.Error(),
+		})
+	}
+	if ValidaVeiculo(uint(temp)) {
+		database.DB.Save(&manutencao)
+		c.JSON(http.StatusOK, manutencao)
+	} else {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Erro": "Veiculo não encontrado",
+		})
+	}
+
 }

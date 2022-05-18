@@ -58,28 +58,26 @@ func AtualizarServico(c *gin.Context) {
 	var servico models.Servico
 	id := c.Params.ByName("id_servico")
 	database.DB.First(&servico, id)
-	if err := c.ShouldBindJSON(&servico); err != nil {
+	err := c.ShouldBindJSON(&servico)
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Erro": err.Error(),
 		})
-	} else {
-		if err := models.ValidacaoServico(&servico); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"Erro": err.Error(),
-			})
-		} else {
-
-			if ValidaMotorista(servico.IdMotorista) && ValidaVeiculo(servico.IdVeiculo) && ValidaAptidao(servico.IdMotorista, servico.IdVeiculo) {
-
-				database.DB.Save(&servico)
-				c.JSON(http.StatusOK, servico)
-
-			} else {
-				c.JSON(http.StatusBadRequest, gin.H{
-					"Erro": "Motorista ou Veiculo não existe ou não possui carteira para o veiculo",
-				})
-			}
-
-		}
 	}
+	err = models.ValidacaoServico(&servico)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Erro": err.Error(),
+		})
+	}
+	val := ValidaServico(servico.IdMotorista, servico.IdVeiculo)
+	if val {
+		database.DB.Save(&servico)
+		c.JSON(http.StatusOK, servico)
+	} else {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Erro": "Motorista ou Veiculo não existe ou não possui carteira para o veiculo",
+		})
+	}
+
 }
