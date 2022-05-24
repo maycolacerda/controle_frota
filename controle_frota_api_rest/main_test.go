@@ -75,3 +75,7 @@ func TestVeiculo(t *testing.T) {
 func TestManutencao(t *testing.T) {
 
 }
+
+func TestManutencaoVeiculo(t *testing.T) {
+
+}

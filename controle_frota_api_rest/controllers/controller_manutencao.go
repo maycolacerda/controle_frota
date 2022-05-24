@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//busca a lista de mantuenções
 func Manutencoes(c *gin.Context) {
 
 	var manutencoes []models.Manutencao
@@ -17,6 +18,7 @@ func Manutencoes(c *gin.Context) {
 
 }
 
+//buscauma manutenção específica
 func GetManutencao(c *gin.Context) {
 	id := c.Params.ByName("id_manutencao")
 	var manutencao models.Manutencao
