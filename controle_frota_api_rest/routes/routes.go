@@ -13,6 +13,7 @@ func HandleRequests() {
 	r := gin.Default()
 	r.LoadHTMLGlob("../templates/*.html")
 
+	// A route to the index page.
 	r.GET("/", controllers.Index)
 	r.GET("/home", controllers.RenderIndex)
 
