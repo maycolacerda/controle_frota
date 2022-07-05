@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// It returns a JSON response with a 200 status code
 func Index(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"message":  "Hello World",
@@ -16,6 +17,7 @@ func Index(c *gin.Context) {
 	})
 }
 
+// It gets all the vehicles from the database and returns them in JSON format
 func Veiculos(c *gin.Context) {
 
 	var veiculos []models.Veiculo
@@ -24,6 +26,8 @@ func Veiculos(c *gin.Context) {
 	c.JSON(200, veiculos)
 }
 
+// It gets the id from the URL, then it looks for the veiculo in the database, if it doesn't find it,
+// it returns a 404 error, if it finds it, it returns the veiculo
 func GetVeiculo(c *gin.Context) {
 	id := c.Params.ByName("id_veiculo")
 	var veiculo models.Veiculo
@@ -39,6 +43,8 @@ func GetVeiculo(c *gin.Context) {
 	}
 }
 
+// If the JSON is valid, then validate the model, if the model is valid, then create the record in the
+// database
 func NovoVeiculo(c *gin.Context) {
 
 	var veiculo models.Veiculo
@@ -61,6 +67,7 @@ func NovoVeiculo(c *gin.Context) {
 
 }
 
+// It deletes a vehicle from the database
 func DeletarVeiculo(c *gin.Context) {
 	id := c.Params.ByName("id_veiculo")
 	var veiculo models.Veiculo
@@ -70,15 +77,16 @@ func DeletarVeiculo(c *gin.Context) {
 	})
 }
 
+// It receives a JSON object, validates it, and then updates the database with the new values
 func AtualizarVeiculo(c *gin.Context) {
 	id := c.Params.ByName("id_veiculo")
 	var veiculo models.Veiculo
 	database.DB.First(&veiculo, id)
-	if err := c.ShouldBindJSON(&veiculo); err != nil { //validação json
+	if err := c.ShouldBindJSON(&veiculo); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
 		})
-	} else { //validação dos campos do modelo
+	} else {
 		if err := models.Validacao(&veiculo); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"message": err.Error(),
@@ -94,6 +102,7 @@ func AtualizarVeiculo(c *gin.Context) {
 
 }
 
+// It renders the index.html template, passing in the Message variable, which is set to "Boas vindas"
 func RenderIndex(c *gin.Context) {
 
 	c.HTML(http.StatusOK, "index.html", gin.H{

@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//busca a lista de mantuenções
+// It gets all the manutencoes from the database and returns them as JSON
 func Manutencoes(c *gin.Context) {
 
 	var manutencoes []models.Manutencao
@@ -18,7 +18,8 @@ func Manutencoes(c *gin.Context) {
 
 }
 
-//buscauma manutenção específica
+// It gets the id from the URL, creates a new Manutencao object, and then uses the database to get the
+// first Manutencao object that matches the id
 func GetManutencao(c *gin.Context) {
 	id := c.Params.ByName("id_manutencao")
 	var manutencao models.Manutencao
@@ -26,8 +27,7 @@ func GetManutencao(c *gin.Context) {
 	c.JSON(200, manutencao)
 }
 
-//cria uma nova manutençao verificando se veiculo existe
-
+// It receives a JSON object, validates it, and if it's valid, it creates a new record in the database
 func NovaManutencao(c *gin.Context) {
 
 	var manutencao models.Manutencao
@@ -61,8 +61,7 @@ func NovaManutencao(c *gin.Context) {
 
 }
 
-//Atualiza manutenção verificando se veiculo existe
-
+// It receives a JSON object, validates it, and if it's valid, it updates the database
 func AtualizarManutencao(c *gin.Context) {
 
 	var manutencao models.Manutencao

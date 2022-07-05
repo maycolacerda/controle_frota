@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// It gets all the services from the database and returns them in JSON format
 func Servicos(c *gin.Context) {
 
 	var servicos []models.Servico
@@ -16,6 +17,8 @@ func Servicos(c *gin.Context) {
 
 }
 
+// It gets the id from the URL, then it gets the servico from the database, and then it returns the
+// servico as JSON
 func GetServico(c *gin.Context) {
 
 	id := c.Params.ByName("id_servico")
@@ -25,7 +28,7 @@ func GetServico(c *gin.Context) {
 
 }
 
-//cria um novo servico verificando os campos do json e se motorista e veiculo existem e se o motorista possui carteira para dividir o veiculo
+// It receives a JSON object, validates it, and if it's valid, it creates a new record in the database
 func NovoServico(c *gin.Context) {
 
 	var servico models.Servico
@@ -53,6 +56,8 @@ func NovoServico(c *gin.Context) {
 
 }
 
+// It receives a JSON object, binds it to a struct, validates the struct, and then saves it to the
+// database
 func AtualizarServico(c *gin.Context) {
 
 	var servico models.Servico

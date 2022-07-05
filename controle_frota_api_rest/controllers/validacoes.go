@@ -5,6 +5,7 @@ import (
 	"controle_frota_gin/models"
 )
 
+// It returns true if the motorista exists in the database, and false if it doesn't
 func ValidaMotorista(idmotorista uint) bool {
 	var motorista models.Motorista
 	database.DB.First(&motorista, idmotorista)
@@ -17,6 +18,7 @@ func ValidaMotorista(idmotorista uint) bool {
 }
 
 //checa se veiculo existe
+// It returns true if the vehicle exists in the database, otherwise it returns false
 func ValidaVeiculo(idveiculo uint) bool {
 
 	var veiculo models.Veiculo
@@ -29,7 +31,8 @@ func ValidaVeiculo(idveiculo uint) bool {
 
 }
 
-//checa se motorista possui carteira para dividir veiculo
+// It returns true if the driver's license is equal to the vehicle's license and the vehicle's license
+// is not equal to "N/A"
 func ValidaAptidao(idmotorista uint, idveiculo uint) bool {
 
 	var motorista models.Motorista
@@ -44,6 +47,7 @@ func ValidaAptidao(idmotorista uint, idveiculo uint) bool {
 
 }
 
+// ValidaServico validates a driver and a vehicle and returns true if both are valid
 func ValidaServico(idmotorista uint, idveiculo uint) bool {
 
 	//chnl := make (chan bool)
