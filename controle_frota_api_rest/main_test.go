@@ -74,6 +74,15 @@ func TestVeiculo(t *testing.T) {
 
 func TestManutencao(t *testing.T) {
 
+	database.Connect()
+	mockResposta := `{"ID":0,"CreatedAt":"2022-05-04T06:41:47Z","UpdatedAt":"2022-05-04T06:41:47Z","DeletedAt":null,"id_manutencao":1,"id_veiculo":1,"data":"2022-05-04T06:41:47Z","descricao":"Manutenção","valor":100}`
+	r := SetupRotasTeste(gin.Default())
+	r.GET("/manutencao/:id_manutencao", controllers.GetManutencao)
+	req, _ := http.NewRequest("GET", "/manutencao/1", nil)
+	resp := httptest.NewRecorder()
+	r.ServeHTTP(resp, req)
+	assert.Equal(t, mockResposta, resp.Body.String(), "os valores devem ser iguais")
+
 }
 
 func TestManutencaoVeiculo(t *testing.T) {
