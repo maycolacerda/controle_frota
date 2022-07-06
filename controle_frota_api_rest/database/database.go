@@ -32,6 +32,7 @@ func Connect() {
 	}
 	Automigrate()
 }
+
 func Automigrate() {
 
 	DB.AutoMigrate(&models.Veiculo{})

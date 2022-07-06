@@ -86,18 +86,18 @@ func AtualizarVeiculo(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": err.Error(),
 		})
+	}
+	err := models.Validacao(&veiculo)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
 	} else {
-		if err := models.Validacao(&veiculo); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"message": err.Error(),
-			})
-		} else {
-			database.DB.Model(&veiculo).UpdateColumns(veiculo)
-			c.JSON(http.StatusOK, gin.H{
-				"message": "Veiculo atualizado com sucesso",
-				"veiculo": veiculo,
-			})
-		}
+		database.DB.Model(&veiculo).UpdateColumns(veiculo)
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Veiculo atualizado com sucesso",
+			"veiculo": veiculo,
+		})
 	}
 
 }

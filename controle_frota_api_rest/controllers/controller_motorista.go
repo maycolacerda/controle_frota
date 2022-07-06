@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// It gets all the motoristas from the database and returns them as JSON
 func Motoristas(c *gin.Context) {
 
 	var motoristas []models.Motorista
@@ -16,6 +17,8 @@ func Motoristas(c *gin.Context) {
 
 }
 
+// It gets the id from the URL, then it gets the motorista from the database, and then it returns the
+// motorista as JSON
 func GetMotorista(c *gin.Context) {
 
 	id := c.Params.ByName("id_motorista")
@@ -25,25 +28,31 @@ func GetMotorista(c *gin.Context) {
 
 }
 
+// It receives a JSON object, binds it to a struct, validates the struct and then inserts it into the
+// database.
 func NovoMotorista(c *gin.Context) {
 
 	var motorista models.Motorista
-	if err := c.ShouldBindJSON(&motorista); err != nil {
+	err := c.ShouldBindJSON(&motorista)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Erro": err.Error(),
+		})
+	}
+	err = models.ValidacaoMotorista(&motorista)
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Erro": err.Error(),
 		})
 	} else {
-		if err := models.ValidacaoMotorista(&motorista); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"Erro": err.Error(),
-			})
-		} else {
-			database.DB.Create(&motorista)
-			c.JSON(http.StatusOK, motorista)
-		}
+		database.DB.Create(&motorista)
+		c.JSON(http.StatusOK, motorista)
 	}
+
 }
 
+// It receives a JSON object, binds it to a struct, validates the struct, and then saves it to the
+// database
 func AtualizarMotorista(c *gin.Context) {
 
 	var motorista models.Motorista
@@ -53,14 +62,15 @@ func AtualizarMotorista(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"Erro": err.Error(),
 		})
-	} else {
-		if err := models.ValidacaoMotorista(&motorista); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"Erro": err.Error(),
-			})
-		} else {
-			database.DB.Save(&motorista)
-			c.JSON(http.StatusOK, motorista)
-		}
 	}
+	err := models.ValidacaoMotorista(&motorista)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Erro": err.Error(),
+		})
+	} else {
+		database.DB.Save(&motorista)
+		c.JSON(http.StatusOK, motorista)
+	}
+
 }
