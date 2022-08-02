@@ -9,6 +9,7 @@ import (
 	"github.com/gorilla/handlers"
 )
 
+// It creates a new Gin router, loads the HTML templates, defines the routes, and starts the server
 func HandleRequests() {
 	r := gin.Default()
 	r.LoadHTMLGlob("../templates/*.html")
