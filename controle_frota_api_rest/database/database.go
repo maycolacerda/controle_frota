@@ -39,4 +39,5 @@ func Automigrate() {
 	DB.AutoMigrate(&models.Motorista{})
 	DB.AutoMigrate(&models.Servico{})
 	DB.AutoMigrate(&models.Manutencao{})
+	DB.AutoMigrate(&models.Users{})
 }
