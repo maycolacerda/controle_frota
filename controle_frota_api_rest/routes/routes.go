@@ -18,6 +18,11 @@ func HandleRequests() {
 	r.GET("/", controllers.Index)
 	r.GET("/home", controllers.RenderIndex)
 
+	//usuários
+	r.GET("/users", controllers.GetUsers)
+	r.GET("/users/:id_user", controllers.GetUser)
+	r.POST("/users/newuser", controllers.NewUser)
+
 	//veiculos
 	r.GET("/veiculos/:id_veiculo", controllers.GetVeiculo)
 	r.GET("/veiculos", controllers.Veiculos)
