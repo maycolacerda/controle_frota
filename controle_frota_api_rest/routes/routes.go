@@ -12,7 +12,6 @@ import (
 // It creates a new Gin router, loads the HTML templates, defines the routes, and starts the server
 func HandleRequests() {
 	r := gin.Default()
-	r.LoadHTMLGlob("../templates/*.html")
 
 	// A route to the index page.
 	r.GET("/", controllers.Index)

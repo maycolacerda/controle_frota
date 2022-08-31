@@ -11,9 +11,8 @@ import (
 // It returns a JSON response with a 200 status code
 func Index(c *gin.Context) {
 	c.JSON(200, gin.H{
-		"message":  "Hello World",
-		"mensagem": "Olá mundo",
-		"status":   "ok",
+		"message": "Hello World",
+		"status":  "ok",
 	})
 }
 
